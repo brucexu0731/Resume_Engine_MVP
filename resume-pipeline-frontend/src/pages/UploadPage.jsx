@@ -5,6 +5,9 @@ import heroImg from '../assets/hero.png'
 import '../App.css'
 import { Link } from 'react-router-dom'
 
+// Child components
+import ResumeUploadForm from '../components/forms/ResumeUploadForm'
+
 export default function UploadPage() {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState(null);
@@ -86,6 +89,11 @@ export default function UploadPage() {
         });
       
       const savedInfo = await saveResponse.text();
+
+      // if (savedInfo.responseMessage === "DUPLICATE") {
+      //   retu
+      // }
+
       setUploadMessage(`Save Success! \n${savedInfo}`)
     } catch (error) {
       setUploadMessage(error.message)
@@ -139,12 +147,14 @@ export default function UploadPage() {
       <h2>{message}</h2>
 
       <h1> Upload your file here </h1>
-      <form>
-        <input id="fileInput" type="file" onChange={(e) => setFile(e.target.files[0])}/>
-        <button type="button" disabled={isUploading} onClick={upload}>
-            Upload
-        </button>
-      </form>
+      <ResumeUploadForm upload={upload} isUploading={isUploading} setFile={setFile}/>
+
+      {(isUploading) ? <>
+        <p>Please wait...</p>
+      </>:<>
+      
+      </>}
+
       <h2 style={{ whiteSpace: "pre-wrap" }}>{uploadMessage}</h2>
 
       <h2>{file?.name}</h2>

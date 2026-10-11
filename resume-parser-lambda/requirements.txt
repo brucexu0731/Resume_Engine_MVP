@@ -1,0 +1,20 @@
+# Core
+python-dotenv #--> loads environment variables 
+pandas #--> loading csv / excel
+pydantic #--> defining and validating structured data
+
+#PDF Processing 
+pymupdf #--> read pdf and extract text 
+pdfplumber #--> similar, extraction for pdf with tables 
+
+#RAG and LLM pipeline
+langchain #--> building block for LLM and RAG workflows
+langchain-openai #--> connect langchain with OpenAI models for embedding and chat completions
+chromadb #--> vector db (store embeddings)
+
+#API Layer
+fastapi #--> expose our pipeline using REST API
+uvicorn #--> ASGI server (run fastapi locally)
+
+# Notebooks
+jupyter #--> for experimentation to run code line by line 

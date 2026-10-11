@@ -16,6 +16,13 @@ from dotenv import load_dotenv
 import os
 import json
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+)
 
 
 
@@ -277,6 +284,7 @@ def extract_text_from_resume(pdf_path: Path) -> str:
 
 
 if __name__ == "__main__":
+    logger.info("test logging")
     result = extract_text_from_resume("data/A5.pdf")
     #result = extract_text_from_resume("data/A5.pdf", "personal")
     print(result)

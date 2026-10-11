@@ -44,7 +44,7 @@ style EDU fill:#06231a,stroke:#16a34a,color:#ffffff
 
 ### Testing Locally
 1. Navigate to directory: `cd resume-parser-lambda`
-2. Create virtual environment: `python3 -m venv .venv`
+2. Create virtual environment: `python3.12 -m venv .venv`
 3. Activate .venv (mac): `source .venv/bin/activate`
 4. Install Dependencies: `pip install -r requirementsDocker.txt`
 5. Configure environment variables: 

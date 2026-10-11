@@ -1,3 +1,7 @@
+# Architecture 
+
+### Basic Components
+
 
 ```mermaid
 ---
@@ -24,7 +28,10 @@ subgraph APP["Application"]
 end
 
 subgraph LOGS["Observability"]
-    CLOUDWATCH["CloudWatch Logs & Metrics"]
+    O["CloudWatch Logs & Metrics"]
 end
-    
+
+L -->|"Parser Script & Lambda Logs"| O
+B -->|"Backend Logs"| O
+
 ```

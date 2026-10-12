@@ -6,7 +6,7 @@ on:
     branches: [main]
     paths:
       - "resume-parser-lambda/**"
-      - ".github/workflows/deploy-parser.yml"
+      - ".github/workflows/lambda_deployment.yml"
 
   workflow_dispatch:
 

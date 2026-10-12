@@ -69,7 +69,7 @@ jobs:
 
       - name: Update Lambda function
         env:
-          FUNCTION_NAME: ${{ vars.PARSER_LAMBDA_NAME }}
+          FUNCTION_NAME: ${{ secrets.PARSER_LAMBDA_NAME }}
           IMAGE_URI: ${{ steps.build-image.outputs.image_uri }}
         run: |
           aws lambda update-function-code \

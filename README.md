@@ -8,7 +8,11 @@ own backend, database, and infrastructure, with the goal of integrating
 the validated solution into the company's production backend and database.
 
 
-## Documentation: /docs
+## Backend /SpringBootBackend
+This directory contains the backend of the resume parser workflow deployed 
+to AWS ECS. It hosts two main workflows: resume parsing and saving, and RAG 
+retrival. For API contracts, database schemas and data flow charts, reference
+the files below.
 
 ### /docs/architecture.md
 Basic System Architecture and core components
@@ -53,3 +57,12 @@ Database schema
 
 ### /docs/workflows
 Contains core data flow of two main backend workflows: Resume Parsing & RAG
+
+## Frontend /resume-pipeline-frontend
+
+This directory contains a basic frontend for testing, written in REACT
+
+## PDF Extraction /resume-parser-lambda
+
+Serverless resume parsing script using LLMs and Python libraries hosted 
+on AWS Lambda with Github Actions CI/CD.

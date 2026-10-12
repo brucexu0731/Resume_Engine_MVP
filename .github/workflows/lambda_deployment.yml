@@ -1,0 +1,63 @@
+
+name: Deploy Resume Parser Lambda
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "resume-parser-lambda/**"
+      - ".github/workflows/deploy-parser.yml"
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push image
+        id: build-image
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          REPOSITORY: parser1
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE_URI="$REGISTRY/$REPOSITORY:$IMAGE_TAG"
+
+          docker build \
+            --platform linux/amd64 \
+            -t "$IMAGE_URI" \
+            ./resume-parser-lambda
+
+          docker push "$IMAGE_URI"
+
+          echo "image_uri=$IMAGE_URI" >> "$GITHUB_OUTPUT"
+
+      - name: Update Lambda function
+        env:
+          FUNCTION_NAME: ${{ vars.PARSER_LAMBDA_NAME }}
+          IMAGE_URI: ${{ steps.build-image.outputs.image_uri }}
+        run: |
+          aws lambda update-function-code \
+            --function-name "$FUNCTION_NAME" \
+            --image-uri "$IMAGE_URI"
+
+          aws lambda wait function-updated \
+            --function-name "$FUNCTION_NAME"
